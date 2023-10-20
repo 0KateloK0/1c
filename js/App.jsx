@@ -34,7 +34,6 @@ export default class App extends React.Component {
     }
 
     handleSelect (user_index) {
-        console.log(this.state.selected, user_index);
         if (this.state.selected !== -1) {
             this.setState({
                 selected: this.state.selected == user_index ? -1 : user_index
@@ -49,7 +48,6 @@ export default class App extends React.Component {
     }
 
     render() {
-        console.log('lkj');
         return (
             <div className="app-wrapper">
                 <Canvas users={this.state.users} selected={this.state.selected}></Canvas>

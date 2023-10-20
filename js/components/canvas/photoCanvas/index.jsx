@@ -23,8 +23,7 @@ export default class PhotoCanvas extends React.Component {
             ctx.stroke();
         }
 
-        function show_position(position, color) {
-            let position_radius = 5;
+        function show_position(position, color, position_radius=3) {
             ctx.beginPath();
             ctx.arc(position[0], position[1], position_radius, 0, 2 * Math.PI);
         
@@ -36,14 +35,15 @@ export default class PhotoCanvas extends React.Component {
         }
 
         function show_trajectory(positions, color) {
-            for (let i = 0; i < positions.length; ++i) {
+            for (let i = 0; i < positions.length - 1; ++i) {
                 show_position(positions[i].coords, color);
-                if (i < positions.length - 1) {
-                    let [x0, y0] = positions[i].coords;
-                    let [x1, y1] = positions[i + 1].coords;
-                    line(x0, y0, x1, y1, color);
-                }
+                
+                let [x0, y0] = positions[i].coords;
+                let [x1, y1] = positions[i + 1].coords;
+                line(x0, y0, x1, y1, color);
             }
+            if (positions.length > 0)
+                show_position(positions[positions.length - 1].coords, color, 8);
         }
 
         if (this.props.selected != -1) {
