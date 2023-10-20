@@ -1,5 +1,5 @@
 .canvas-wrapper {
-    background: url(../../../../dist/map.jpg);
+    background: url(./map.jpg);
     background-size: 500px 500px;
     background-repeat: no-repeat;
 }

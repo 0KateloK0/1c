@@ -12,11 +12,3 @@ export default class Canvas extends React.Component {
         )
     }
 }
-
-// show_current_positions(users)
-// show_trajectory(user)
-
-// select_point()
-
-
-// highlight_selection()

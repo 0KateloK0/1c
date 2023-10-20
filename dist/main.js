@@ -28715,10 +28715,7 @@ var Canvas = /*#__PURE__*/function (_React$Component) {
     }
   }]);
   return Canvas;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // show_current_positions(users)
-// show_trajectory(user)
-// select_point()
-// highlight_selection()
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 
 /***/ }),
@@ -28750,19 +28747,6 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-
-// поскольку изображение рисуется на канвасе и необходимо чтобы канвас был создан до того как на нем что-то будет изменяться,
-// канвас должен быть создан раньше этого объекта. 
-
-// class Canvas extends React.Component {
-//     constructor (props) {
-
-//     }
-
-//     render () {
-
-//     }
-// }
 var PhotoCanvas = /*#__PURE__*/function (_React$Component) {
   _inherits(PhotoCanvas, _React$Component);
   var _super = _createSuper(PhotoCanvas);
@@ -28827,8 +28811,6 @@ var PhotoCanvas = /*#__PURE__*/function (_React$Component) {
           _iterator2.f();
         }
       }
-
-      // };
     }
   }, {
     key: "componentDidMount",
@@ -29318,7 +29300,7 @@ module.exports = function (url, options) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "dist/map.jpg");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "js/components/canvas/photoCanvas/map.jpg");
 
 /***/ }),
 /* 22 */
@@ -29560,7 +29542,7 @@ module.exports = content.locals || {};
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(19);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "body {\n  margin: 0;\n}\n\n.__react-root {\n  /* position: absolute; */\n  /* width: 100%; */\n  /* height: 100%; */\n  /* top: 0; */\n  /* left: 0; */\n  /* transform: translate(-50%, -50%); */\n  /* display: block; */\n}", ""]);
+exports.push([module.i, "body {\n  margin: 0;\n}", ""]);
 // Exports
 module.exports = exports;
 

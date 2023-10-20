@@ -1,19 +1,6 @@
 import React from 'react';
 import './index.css';
 
-// поскольку изображение рисуется на канвасе и необходимо чтобы канвас был создан до того как на нем что-то будет изменяться,
-// канвас должен быть создан раньше этого объекта. 
-
-// class Canvas extends React.Component {
-//     constructor (props) {
-
-//     }
-
-//     render () {
-
-//     }
-// }
-
 export default class PhotoCanvas extends React.Component {
     constructor(props) {
         super(props);
@@ -26,8 +13,6 @@ export default class PhotoCanvas extends React.Component {
     redraw() {
         let canvas = this.canvasRef.current;
         let ctx = canvas.getContext('2d');
-
-        
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -55,10 +40,6 @@ export default class PhotoCanvas extends React.Component {
                 }
             }
         }
-
-        
-        // };
-
     }
     componentDidMount () {
         this.redraw();
