@@ -16,6 +16,13 @@ export default class PhotoCanvas extends React.Component {
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        function line(x0, y0, x1, y1, color) {
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1, y1);
+            ctx.strokeStyle = color;
+            ctx.stroke();
+        }
+
         function show_position(position, color) {
             let position_radius = 5;
             ctx.beginPath();
@@ -28,16 +35,24 @@ export default class PhotoCanvas extends React.Component {
             ctx.stroke();
         }
 
-        if (this.props.selected != -1) {
-            for (let pos of this.props.users[this.props.selected]._positions) {
-                show_position(pos.coords, this.props.users[this.props.selected].color);
+        function show_trajectory(positions, color) {
+            for (let i = 0; i < positions.length; ++i) {
+                show_position(positions[i].coords, color);
+                if (i < positions.length - 1) {
+                    let [x0, y0] = positions[i].coords;
+                    let [x1, y1] = positions[i + 1].coords;
+                    line(x0, y0, x1, y1, color);
+                }
             }
+        }
+
+        if (this.props.selected != -1) {
+            let user = this.props.users[this.props.selected];
+            show_trajectory(user._positions, user.color);
         }
         else {
             for (let user of this.props.users) {
-                for (let pos of user._positions) {
-                    show_position(pos.coords, user.color);
-                }
+                show_trajectory(user._positions, user.color);
             }
         }
     }
