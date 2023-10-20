@@ -5,11 +5,11 @@ function Position(props) {
     return (
         <div className="user__position">
             <span className="user__position-time">
-                Time: {props.time}
+                Время: {props.time}
             </span>
             <br></br>
             <span className="user__position-coords">
-                Coords: {props.coords[0]} {props.coords[1]}
+                Координаты: {props.coords[0]} {props.coords[1]}
             </span>
         </div>
     );
@@ -22,10 +22,10 @@ function User(props) {
                 {props.user.name}
             </span>
             <button className="user__add-position" onClick={props.handleNewPosition}>
-                new position
+                Новая геоточка
             </button>
             <button className="user__select" onClick={props.handleSelect}>
-                select
+                Выделить
             </button>
             <div className="user__positions">
                 {
@@ -43,7 +43,7 @@ export default class Sidebar extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            users: props.users
+            
         };
     }
 
@@ -62,17 +62,23 @@ export default class Sidebar extends React.Component {
         this.props.handleNewPosition(i, x, y, time);
     }
 
+    handleNewUser (event) {
+        let name = prompt('Введите имя нового пользователя');
+        this.props.handleNewUser(name);
+    }
+
     render () {
         return (
             <div className="sidebar-wrapper">
                 {
-                    this.state.users.map((a, i) =>
+                    this.props.users.map((a, i) =>
                         <User user={a} 
                             key={i} 
                             handleNewPosition={this.handleNewPosition.bind(this, i)} 
                             selected={i == this.props.selected}
                             handleSelect={this.props.handleSelect.bind(this, i)}></User>)
                 }
+                <button className="sidebar__new-user" onClick={this.handleNewUser.bind(this)}>Новый пользователь</button>
             </div>
         )
     }

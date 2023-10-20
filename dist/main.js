@@ -28614,16 +28614,17 @@ var App = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, App);
     _this = _super.call(this, props);
     _this.state = {
-      users: [new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"]('Artem'), new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"]('Kirill')],
+      users: [new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"]('Артем'), new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"]('Кирилл')],
       selected: -1
     };
     return _this;
   }
   _createClass(App, [{
-    key: "handleAddingNewUser",
-    value: function handleAddingNewUser(user) {
+    key: "handleNewUser",
+    value: function handleNewUser(name) {
+      console.log([].concat(_toConsumableArray(this.state.users), [new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"](name)]));
       this.setState({
-        users: [].concat(_toConsumableArray(this.state.users), [user])
+        users: [].concat(_toConsumableArray(this.state.users), [new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"](name)])
       });
     }
   }, {
@@ -28653,6 +28654,7 @@ var App = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      console.log('lkj');
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "app-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_canvas__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -28662,7 +28664,8 @@ var App = /*#__PURE__*/function (_React$Component) {
         users: this.state.users,
         selected: this.state.selected,
         handleNewPosition: this.handleNewPosition.bind(this),
-        handleSelect: this.handleSelect.bind(this)
+        handleSelect: this.handleSelect.bind(this),
+        handleNewUser: this.handleNewUser.bind(this)
       }));
     }
   }]);
@@ -29348,9 +29351,9 @@ function Position(props) {
     className: "user__position"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "user__position-time"
-  }, "Time: ", props.time), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+  }, "\u0412\u0440\u0435\u043C\u044F: ", props.time), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "user__position-coords"
-  }, "Coords: ", props.coords[0], " ", props.coords[1]));
+  }, "\u041A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u044B: ", props.coords[0], " ", props.coords[1]));
 }
 function User(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -29366,10 +29369,10 @@ function User(props) {
   }, props.user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "user__add-position",
     onClick: props.handleNewPosition
-  }, "new position"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  }, "\u041D\u043E\u0432\u0430\u044F \u0433\u0435\u043E\u0442\u043E\u0447\u043A\u0430"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "user__select",
     onClick: props.handleSelect
-  }, "select"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "\u0412\u044B\u0434\u0435\u043B\u0438\u0442\u044C"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "user__positions"
   }, props.user.positions.map(function (a, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Position, {
@@ -29386,9 +29389,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
     var _this;
     _classCallCheck(this, Sidebar);
     _this = _super.call(this, props);
-    _this.state = {
-      users: props.users
-    };
+    _this.state = {};
     return _this;
   }
   _createClass(Sidebar, [{
@@ -29406,12 +29407,18 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
       this.props.handleNewPosition(i, x, y, time);
     }
   }, {
+    key: "handleNewUser",
+    value: function handleNewUser(event) {
+      var name = prompt('Введите имя нового пользователя');
+      this.props.handleNewUser(name);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidebar-wrapper"
-      }, this.state.users.map(function (a, i) {
+      }, this.props.users.map(function (a, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(User, {
           user: a,
           key: i,
@@ -29419,7 +29426,10 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
           selected: i == _this2.props.selected,
           handleSelect: _this2.props.handleSelect.bind(_this2, i)
         });
-      }));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "sidebar__new-user",
+        onClick: this.handleNewUser.bind(this)
+      }, "\u041D\u043E\u0432\u044B\u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C"));
     }
   }]);
   return Sidebar;
@@ -29458,7 +29468,7 @@ module.exports = content.locals || {};
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(19);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".sidebar-wrapper {\n  position: absolute;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  width: 200px;\n  height: 100%;\n  border-left: 2px solid black;\n}\n\n.user {\n  border-bottom: 2px solid red;\n}\n\n.user__positions {\n  height: 100px;\n  overflow-y: scroll;\n}\n\n.user__position {\n  border-bottom: 2px solid black;\n}", ""]);
+exports.push([module.i, ".sidebar-wrapper {\n  position: absolute;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  width: 400px;\n  height: 100%;\n  border-left: 2px solid black;\n}\n\n.sidebar__filter {\n  border-bottom: 2px solid black;\n}\n\n.user {\n  border-bottom: 2px solid red;\n}\n\n.user__positions {\n  height: 100px;\n  overflow-y: scroll;\n}\n\n.user__position {\n  border-bottom: 2px solid black;\n}", ""]);
 // Exports
 module.exports = exports;
 

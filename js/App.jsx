@@ -10,16 +10,17 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             users: [
-                new common.User('Artem'),
-                new common.User('Kirill')
+                new common.User('Артем'),
+                new common.User('Кирилл')
             ],
             selected: -1
         };
     }
 
-    handleAddingNewUser (user) {
+    handleNewUser (name) {
+        console.log([...this.state.users, new common.User(name)]);
         this.setState({
-            users: [...this.state.users, user]
+            users: [...this.state.users, new common.User(name)]
         });
     }
 
@@ -48,6 +49,7 @@ export default class App extends React.Component {
     }
 
     render() {
+        console.log('lkj');
         return (
             <div className="app-wrapper">
                 <Canvas users={this.state.users} selected={this.state.selected}></Canvas>
@@ -55,6 +57,7 @@ export default class App extends React.Component {
                     selected={this.state.selected}
                     handleNewPosition={this.handleNewPosition.bind(this)}
                     handleSelect={this.handleSelect.bind(this)}
+                    handleNewUser={this.handleNewUser.bind(this)}
                     ></Sidebar>
             </div>
         );

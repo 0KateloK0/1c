@@ -3,9 +3,13 @@
     right: 0;
     top: 0;
     bottom: 0;
-    width: 200px;
+    width: 400px;
     height: 100%;
     border-left: 2px solid black;
+}
+
+.sidebar__filter {
+    border-bottom: 2px solid black;
 }
 
 .user {
