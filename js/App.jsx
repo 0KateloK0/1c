@@ -12,7 +12,8 @@ export default class App extends React.Component {
             users: [
                 new common.User('Artem'),
                 new common.User('Kirill')
-            ]
+            ],
+            selected: -1
         };
     }
 
@@ -31,11 +32,30 @@ export default class App extends React.Component {
         });
     }
 
+    handleSelect (user_index) {
+        console.log(this.state.selected, user_index);
+        if (this.state.selected !== -1) {
+            this.setState({
+                selected: this.state.selected == user_index ? -1 : user_index
+            });
+        }
+        else {
+            this.setState({
+                selected: user_index
+            })
+        }
+        
+    }
+
     render() {
         return (
             <div className="app-wrapper">
-                <Canvas users={this.state.users}></Canvas>
-                <Sidebar users={this.state.users} handleNewPosition={this.handleNewPosition.bind(this)}></Sidebar>
+                <Canvas users={this.state.users} selected={this.state.selected}></Canvas>
+                <Sidebar users={this.state.users} 
+                    selected={this.state.selected}
+                    handleNewPosition={this.handleNewPosition.bind(this)}
+                    handleSelect={this.handleSelect.bind(this)}
+                    ></Sidebar>
             </div>
         );
     }

@@ -28614,7 +28614,8 @@ var App = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, App);
     _this = _super.call(this, props);
     _this.state = {
-      users: [new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"]('Artem'), new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"]('Kirill')]
+      users: [new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"]('Artem'), new _common_js__WEBPACK_IMPORTED_MODULE_3__["User"]('Kirill')],
+      selected: -1
     };
     return _this;
   }
@@ -28636,15 +28637,32 @@ var App = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "handleSelect",
+    value: function handleSelect(user_index) {
+      console.log(this.state.selected, user_index);
+      if (this.state.selected !== -1) {
+        this.setState({
+          selected: this.state.selected == user_index ? -1 : user_index
+        });
+      } else {
+        this.setState({
+          selected: user_index
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "app-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_canvas__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        users: this.state.users
+        users: this.state.users,
+        selected: this.state.selected
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_sidebar__WEBPACK_IMPORTED_MODULE_2__["default"], {
         users: this.state.users,
-        handleNewPosition: this.handleNewPosition.bind(this)
+        selected: this.state.selected,
+        handleNewPosition: this.handleNewPosition.bind(this),
+        handleSelect: this.handleSelect.bind(this)
       }));
     }
   }]);
@@ -28688,7 +28706,8 @@ var Canvas = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_photoCanvas__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        users: this.props.users
+        users: this.props.users,
+        selected: this.props.selected
       });
     }
   }]);
@@ -28757,38 +28776,56 @@ var PhotoCanvas = /*#__PURE__*/function (_React$Component) {
     value: function redraw() {
       var canvas = this.canvasRef.current;
       var ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'red';
+      ctx.strokeStyle = 'red';
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      var self = this;
-      var _iterator = _createForOfIteratorHelper(self.props.users),
-        _step;
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var user = _step.value;
-          var _iterator2 = _createForOfIteratorHelper(user._positions),
-            _step2;
-          try {
-            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-              var pos = _step2.value;
-              var position_radius = 5;
-              ctx.beginPath();
-              ctx.arc(pos.coords[0], pos.coords[1], position_radius, 0, 2 * Math.PI);
-              ctx.fillStyle = 'red';
-              ctx.strokeStyle = 'red';
-              ctx.fill();
-              ctx.stroke();
-            }
-          } catch (err) {
-            _iterator2.e(err);
-          } finally {
-            _iterator2.f();
-          }
-        }
-        // };
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
+      function show_position(position) {
+        var position_radius = 5;
+        ctx.beginPath();
+        ctx.arc(position[0], position[1], position_radius, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
       }
+      if (this.props.selected != -1) {
+        var _iterator = _createForOfIteratorHelper(this.props.users[this.props.selected]._positions),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var pos = _step.value;
+            show_position(pos.coords);
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      } else {
+        var _iterator2 = _createForOfIteratorHelper(this.props.users),
+          _step2;
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var user = _step2.value;
+            var _iterator3 = _createForOfIteratorHelper(user._positions),
+              _step3;
+            try {
+              for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+                var _pos = _step3.value;
+                show_position(_pos.coords);
+              }
+            } catch (err) {
+              _iterator3.e(err);
+            } finally {
+              _iterator3.f();
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      }
+
+      // };
     }
   }, {
     key: "componentDidMount",
@@ -29317,13 +29354,19 @@ function Position(props) {
 }
 function User(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "user"
+    className: "user",
+    style: {
+      backgroundColor: props.selected ? 'grey' : 'white'
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "user__name"
   }, props.user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "user__add-position",
     onClick: props.handleNewPosition
-  }, "new position"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "new position"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "user__select",
+    onClick: props.handleSelect
+  }, "select"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "user__positions"
   }, props.user.positions.map(function (a, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Position, {
@@ -29369,7 +29412,9 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(User, {
           user: a,
           key: i,
-          handleNewPosition: _this2.handleNewPosition.bind(_this2, i)
+          handleNewPosition: _this2.handleNewPosition.bind(_this2, i),
+          selected: i == _this2.props.selected,
+          handleSelect: _this2.props.handleSelect.bind(_this2, i)
         });
       }));
     }

@@ -8,7 +8,7 @@ export default class Canvas extends React.Component {
 
     render () {
         return (
-            <PhotoCanvas users={this.props.users}></PhotoCanvas>
+            <PhotoCanvas users={this.props.users} selected={this.props.selected}></PhotoCanvas>
         )
     }
 }

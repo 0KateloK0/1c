@@ -17,12 +17,15 @@ function Position(props) {
 
 function User(props) {
     return (
-        <div className="user">
+        <div className="user" style={{backgroundColor: props.selected ? 'grey' : 'white'}}>
             <span className="user__name">
                 {props.user.name}
             </span>
             <button className="user__add-position" onClick={props.handleNewPosition}>
                 new position
+            </button>
+            <button className="user__select" onClick={props.handleSelect}>
+                select
             </button>
             <div className="user__positions">
                 {
@@ -64,7 +67,11 @@ export default class Sidebar extends React.Component {
             <div className="sidebar-wrapper">
                 {
                     this.state.users.map((a, i) =>
-                        <User user={a} key={i} handleNewPosition={this.handleNewPosition.bind(this, i)}></User>)
+                        <User user={a} 
+                            key={i} 
+                            handleNewPosition={this.handleNewPosition.bind(this, i)} 
+                            selected={i == this.props.selected}
+                            handleSelect={this.props.handleSelect.bind(this, i)}></User>)
                 }
             </div>
         )
