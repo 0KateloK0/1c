@@ -18,7 +18,7 @@ function Position(props) {
 function User(props) {
     return (
         <div className="user" style={{backgroundColor: props.selected ? 'grey' : 'white'}}>
-            <span className="user__name">
+            <span className="user__name" style={{backgroundColor: props.user.color}}>
                 {props.user.name}
             </span>
             <button className="user__add-position" onClick={props.handleNewPosition}>

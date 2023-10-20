@@ -28776,13 +28776,13 @@ var PhotoCanvas = /*#__PURE__*/function (_React$Component) {
     value: function redraw() {
       var canvas = this.canvasRef.current;
       var ctx = canvas.getContext('2d');
-      ctx.fillStyle = 'red';
-      ctx.strokeStyle = 'red';
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      function show_position(position) {
+      function show_position(position, color) {
         var position_radius = 5;
         ctx.beginPath();
         ctx.arc(position[0], position[1], position_radius, 0, 2 * Math.PI);
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
         ctx.fill();
         ctx.stroke();
       }
@@ -28792,7 +28792,7 @@ var PhotoCanvas = /*#__PURE__*/function (_React$Component) {
         try {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var pos = _step.value;
-            show_position(pos.coords);
+            show_position(pos.coords, this.props.users[this.props.selected].color);
           }
         } catch (err) {
           _iterator.e(err);
@@ -28810,7 +28810,7 @@ var PhotoCanvas = /*#__PURE__*/function (_React$Component) {
             try {
               for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
                 var _pos = _step3.value;
-                show_position(_pos.coords);
+                show_position(_pos.coords, user.color);
               }
             } catch (err) {
               _iterator3.e(err);
@@ -29359,7 +29359,10 @@ function User(props) {
       backgroundColor: props.selected ? 'grey' : 'white'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "user__name"
+    className: "user__name",
+    style: {
+      backgroundColor: props.user.color
+    }
   }, props.user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "user__add-position",
     onClick: props.handleNewPosition
@@ -29479,11 +29482,19 @@ var Position = /*#__PURE__*/_createClass(function Position(time, coords) {
   this.time = time;
   this.coords = coords;
 });
+var colors = [];
+while (colors.length < 100) {
+  do {
+    var color = Math.floor(Math.random() * 1000000 + 1);
+  } while (colors.indexOf(color) >= 0);
+  colors.push("#" + ("000000" + color.toString(16)).slice(-6));
+}
 var User = /*#__PURE__*/function () {
   function User(name) {
     _classCallCheck(this, User);
     this._name = name;
     this._positions = [];
+    this.color = colors[Math.floor(Math.random() * colors.length)];
   }
   _createClass(User, [{
     key: "name",

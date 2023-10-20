@@ -27,29 +27,31 @@ export default class PhotoCanvas extends React.Component {
         let canvas = this.canvasRef.current;
         let ctx = canvas.getContext('2d');
 
-        ctx.fillStyle = 'red';
-        ctx.strokeStyle = 'red';
+        
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        function show_position(position) {
+        function show_position(position, color) {
             let position_radius = 5;
             ctx.beginPath();
             ctx.arc(position[0], position[1], position_radius, 0, 2 * Math.PI);
-            
+        
+            ctx.fillStyle = color;
+            ctx.strokeStyle = color;
+
             ctx.fill();
             ctx.stroke();
         }
 
         if (this.props.selected != -1) {
             for (let pos of this.props.users[this.props.selected]._positions) {
-                show_position(pos.coords);
+                show_position(pos.coords, this.props.users[this.props.selected].color);
             }
         }
         else {
             for (let user of this.props.users) {
                 for (let pos of user._positions) {
-                    show_position(pos.coords);
+                    show_position(pos.coords, user.color);
                 }
             }
         }
